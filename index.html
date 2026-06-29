@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Omar Faruq — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0f;
+      --surface: #16161a;
+      --surface2: #1e1e24;
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.14);
+      --accent: #4f8ef7;
+      --accent-dim: rgba(79,142,247,0.12);
+      --accent-mid: rgba(79,142,247,0.25);
+      --text: #f0f0f4;
+      --muted: #888899;
+      --soft: #b0b0c0;
+      --tag-bg: rgba(255,255,255,0.06);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,13,15,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 58px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; color: var(--text); text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 13px;
+      font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--text); font-size: 22px; }
+    .mobile-menu {
+      display: none; position: fixed; top: 58px; left: 0; right: 0; bottom: 0;
+      background: var(--bg); z-index: 99; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--text); text-decoration: none; font-size: 22px; font-weight: 500; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -55%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; text-align: center; max-width: 680px;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-dim); border: 1px solid var(--accent-mid);
+      border-radius: 100px; padding: 5px 16px;
+      font-size: 12px; color: var(--accent); letter-spacing: 0.06em;
+      text-transform: uppercase; font-weight: 600; margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow span.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 8vw, 76px);
+      line-height: 1.05; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 1.25rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub {
+      font-size: 16px; color: var(--soft); max-width: 480px; margin: 0 auto 2rem;
+    }
+    .hero-contacts {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 2.5rem;
+    }
+    .hero-contact {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 100px; padding: 7px 16px;
+      font-size: 13px; color: var(--soft); text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .hero-contact:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-contact svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff;
+      border-radius: 100px; padding: 12px 28px; font-size: 14px; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .hero-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* SECTIONS */
+    section { padding: 5rem 2rem; max-width: 760px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 40px); color: var(--text); margin-bottom: 2.5rem;
+      line-height: 1.15;
+    }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ABOUT */
+    .about-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 16px; padding: 2rem;
+    }
+    .about-card p { color: var(--soft); font-size: 15px; line-height: 1.8; margin-bottom: 1.5rem; }
+    .about-card p:last-of-type { margin-bottom: 0; }
+    .hobbies { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
+    .hobby-chip {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--tag-bg); border: 1px solid var(--border2);
+      border-radius: 100px; padding: 6px 14px;
+      font-size: 13px; color: var(--soft);
+    }
+    .hobby-chip svg { width: 14px; height: 14px; color: var(--accent); }
+
+    /* EDUCATION */
+    .edu-list { display: flex; flex-direction: column; gap: 1rem; }
+    .edu-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 14px; padding: 1.5rem;
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+    }
+    .edu-card:hover { border-color: var(--accent); transition: border-color 0.2s; }
+    .edu-degree { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .edu-inst { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+    .edu-year { font-size: 12px; color: var(--muted); }
+    .edu-badge {
+      background: var(--accent-dim); border: 1px solid var(--accent-mid);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 12px; font-weight: 600; color: var(--accent); white-space: nowrap;
+    }
+
+    /* SKILLS */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    .skill-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 12px; padding: 1rem;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .skill-card:hover { border-color: var(--accent); background: var(--surface2); }
+    .skill-icon { font-size: 22px; }
+    .skill-name { font-size: 13px; font-weight: 500; color: var(--soft); }
+
+    /* PROJECTS */
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 16px; padding: 2rem; margin-bottom: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem; gap: 1rem; }
+    .project-name { font-size: 17px; font-weight: 600; color: var(--text); }
+    .project-desc { font-size: 14px; color: var(--soft); line-height: 1.8; margin-bottom: 1.25rem; }
+    .tag-list { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      background: var(--tag-bg); border: 1px solid var(--border2);
+      border-radius: 100px; padding: 4px 12px;
+      font-size: 12px; color: var(--muted);
+    }
+
+    /* EXPERIENCE */
+    .exp-timeline { position: relative; padding-left: 24px; }
+    .exp-timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+      width: 1px; background: var(--border2);
+    }
+    .exp-item { position: relative; margin-bottom: 2.5rem; }
+    .exp-item::before {
+      content: ''; position: absolute; left: -28px; top: 6px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg);
+    }
+    .exp-role { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .exp-company { font-size: 13px; color: var(--accent); margin-bottom: 4px; }
+    .exp-duration { font-size: 12px; color: var(--muted); margin-bottom: 1rem; }
+    .exp-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .exp-list li {
+      font-size: 14px; color: var(--soft); padding-left: 16px; position: relative; line-height: 1.7;
+    }
+    .exp-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+    /* REFERENCES */
+    .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .ref-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 14px; padding: 1.5rem;
+    }
+    .ref-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--accent-dim); border: 1px solid var(--accent-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600; color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .ref-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .ref-role { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 0.75rem; }
+    .ref-email { font-size: 12px; color: var(--accent); text-decoration: none; word-break: break-all; }
+    .ref-email:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      section { padding: 4rem 1.25rem; }
+      .edu-card { flex-direction: column; }
+      .ref-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-eyebrow span.dot { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">Omar Faruq</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#education" onclick="toggleMenu()">Education</a>
+  <a href="#skills" onclick="toggleMenu()">Skills</a>
+  <a href="#projects" onclick="toggleMenu()">Projects</a>
+  <a href="#experience" onclick="toggleMenu()">Experience</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="dot"></span> Open to opportunities</div>
+    <h1>Omar <em>Faruq</em></h1>
+    <p class="hero-sub">CSE undergraduate · Video editor & videographer · AIUB, Bangladesh</p>
+    <div class="hero-contacts">
+      <a href="tel:+8801521762933" class="hero-contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +880 1521762933
+      </a>
+      <a href="mailto:23-54202-3@student.aiub.edu" class="hero-contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        23-54202-3@student.aiub.edu
+      </a>
+      <a href="#" class="hero-contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Dhaka, Bangladesh
+      </a>
+    </div>
+    <a href="#about" class="hero-cta">
+      View my work
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </a>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">Who I am</p>
+  <h2 class="section-title">About me</h2>
+  <div class="about-card">
+    <p>
+      I'm a motivated Computer Science & Engineering undergraduate at American International University–Bangladesh (AIUB), expected to graduate in early 2026. I combine a strong technical foundation with a creative passion for video production and visual storytelling.
+    </p>
+    <p>
+      My goal is to bring both my technical skills and creative instincts into the tech industry — whether through software projects, media production, or roles that bridge the two worlds.
+    </p>
+    <p>Also a proud member of the <strong>AIUB Photography Club</strong>.</p>
+    <div class="hobbies">
+      <span class="hobby-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>Videography</span>
+      <span class="hobby-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Photography</span>
+      <span class="hobby-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>Video editing</span>
+      <span class="hobby-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/></svg>Gaming</span>
+      <span class="hobby-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><path d="M15 17.5H9M3 4h1l4 10h8l4-10h1"/></svg>Cycling</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- EDUCATION -->
+<section id="education">
+  <p class="section-label">Academic background</p>
+  <h2 class="section-title">Education</h2>
+  <div class="edu-list">
+    <div class="edu-card">
+      <div>
+        <div class="edu-degree">BSc in Computer Science & Engineering</div>
+        <div class="edu-inst">American International University–Bangladesh (AIUB)</div>
+        <div class="edu-year">February 2026 (Tentative) · Student ID: 23-54202-3</div>
+      </div>
+      <div class="edu-badge">CGPA 2.93/4.00</div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+        <div class="edu-inst">Amla Government College</div>
+        <div class="edu-year">2020</div>
+      </div>
+      <div class="edu-badge">GPA 4.92/5.00</div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-degree">Secondary School Certificate (SSC)</div>
+        <div class="edu-inst">Kushtia Zilla School</div>
+        <div class="edu-year">2018</div>
+      </div>
+      <div class="edu-badge" style="background:rgba(120,80,255,0.12);border-color:rgba(120,80,255,0.3);color:#a78bfa;">GPA 5.00/5.00</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">What I know</p>
+  <h2 class="section-title">Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><div class="skill-icon">⌨️</div><div class="skill-name">C++</div></div>
+    <div class="skill-card"><div class="skill-icon">📄</div><div class="skill-name">Microsoft Word</div></div>
+    <div class="skill-card"><div class="skill-icon">📊</div><div class="skill-name">PowerPoint</div></div>
+    <div class="skill-card"><div class="skill-icon">✂️</div><div class="skill-name">CapCut</div></div>
+    <div class="skill-card"><div class="skill-icon">🎬</div><div class="skill-name">KineMaster</div></div>
+    <div class="skill-card"><div class="skill-icon">🎞️</div><div class="skill-name">Filmora</div></div>
+    <div class="skill-card"><div class="skill-icon">🎨</div><div class="skill-name">Adobe Premiere Pro</div></div>
+    <div class="skill-card"><div class="skill-icon">🌈</div><div class="skill-name">Color grading</div></div>
+    <div class="skill-card"><div class="skill-icon">📷</div><div class="skill-name">DSLR / Mirrorless</div></div>
+    <div class="skill-card"><div class="skill-icon">🚁</div><div class="skill-name">Drone operation</div></div>
+    <div class="skill-card"><div class="skill-icon">📋</div><div class="skill-name">Project management</div></div>
+    <div class="skill-card"><div class="skill-icon">🎭</div><div class="skill-name">Storytelling</div></div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">What I've built</p>
+  <h2 class="section-title">Projects</h2>
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-name">Experimental Cinematography Reel</div>
+    </div>
+    <p class="project-desc">
+      A creative montage showcasing experimental videography techniques — including lens flares, unique transitions, and handheld camera work. The reel demonstrates advanced visual storytelling and post-production skills, bringing together color correction, event footage, and drone aerial shots.
+    </p>
+    <div class="tag-list">
+      <span class="tag">Event videography</span>
+      <span class="tag">Storytelling</span>
+      <span class="tag">Editing</span>
+      <span class="tag">Drone operation</span>
+      <span class="tag">Color correction</span>
+      <span class="tag">Transitions</span>
+    </div>
+  </div>
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-name">AIUB Photography Club — Member</div>
+    </div>
+    <p class="project-desc">
+      Active member of the AIUB Photography Club, contributing to campus events, photo walks, and collaborative visual projects with fellow students.
+    </p>
+    <div class="tag-list">
+      <span class="tag">Photography</span>
+      <span class="tag">Community</span>
+      <span class="tag">Events</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Where I've worked</p>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-role">Video Production Intern</div>
+      <div class="exp-company">Event Sajay</div>
+      <div class="exp-duration">June 2023 – August 2023</div>
+      <ul class="exp-list">
+        <li>Filmed and edited promotional videos for clients, including on-location shoots.</li>
+        <li>Operated DSLR and mirrorless cameras, ensuring proper framing and lighting for interviews.</li>
+        <li>Edited raw footage using Adobe Premiere Pro, adding transitions, effects, and titles.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- REFERENCES / CONTACT -->
+<section id="contact">
+  <p class="section-label">People who know my work</p>
+  <h2 class="section-title">References</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <div class="ref-avatar">DK</div>
+      <div class="ref-name">Dr. Debajyoti Karmaker</div>
+      <div class="ref-role">Assistant Professor, CS<br>American International University–Bangladesh</div>
+      <a href="mailto:d.karmaker@aiub.edu" class="ref-email">d.karmaker@aiub.edu</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-avatar">MK</div>
+      <div class="ref-name">Md Kishor Morol</div>
+      <div class="ref-role">Founder & Research Scientist<br>ELITE Lab</div>
+      <a href="mailto:kishor@elitelab.ai" class="ref-email">kishor@elitelab.ai</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Omar Faruq · Kuratoli, Khilkhet, Dhaka · <a href="mailto:23-54202-3@student.aiub.edu" style="color:var(--accent);text-decoration:none;">23-54202-3@student.aiub.edu</a></p>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
